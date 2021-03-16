@@ -1,0 +1,36 @@
+﻿@model IndexViewModel
+@{
+	ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+	<div class="col-6">
+		<form class="row g-3" method="POST">
+			<div class="col-12">
+				<label class="form-label" asp-for="ImageSource"></label>
+				<input class="form-control" asp-for="ImageSource" autocomplete="off" required />
+			</div>
+			<div class="col">
+				<label class="form-label" asp-for="Rows"></label>
+				<input class="form-control" asp-for="Rows" autocomplete="off" />
+			</div>
+			<div class="col">
+				<label class="form-label" asp-for="Columns"></label>
+				<input class="form-control" asp-for="Columns" autocomplete="off" />
+			</div>
+			<div class="col-auto d-flex align-items-end">
+				<input class="btn btn-primary" type="submit" value="Загрузить" />
+			</div>
+		</form>
+	</div>
+	<div class="col-6">
+		@if (Model.IsImageLoaded)
+		{
+			<partial name="_IndexSegments" model="Model.Segments" />
+		}
+		else
+		{
+			<span>Картинка не загружена.</span>
+		}
+	</div>
+</div>

@@ -1,0 +1,52 @@
+@model IndexSegmentsViewModel
+
+<div class="border" id="SegmentsResizable">
+	<div id="Segments">
+		@for (var i = 0; i < Model.Count; i++)
+		{
+			<img height="@Model.SegmentHeight" width="@Model.SegmentWidth" />
+		}
+	</div>
+</div>
+
+<script>
+	var segments = $("#Segments");
+
+	function loadSegments() {
+		let index = 1;
+		for (let img of segments.children()) {
+			let segment = $(img);
+			if (segment.offset().top < segments.offset().top + segments.height() && !segment.attr("src")) {
+				segment.attr("src", `/Image/Segment/${index}.png`);
+			}
+			index++;
+		}
+	}
+
+	segments.scroll(() => loadSegments());
+
+	var segmentsResizable = () => $("#SegmentsResizable")
+		.resizable({
+			create: (e, ui) => loadSegments(),
+			resize: (e, ui) => loadSegments()
+		});
+
+	$(segmentsResizable);
+</script>
+
+<style>
+	#SegmentsResizable {
+		height: 90vh;
+		padding-right: 1em;
+	}
+
+	#Segments {
+		height: 100%;
+		overflow: scroll;
+		width: 100%;
+	}
+
+	#Segments > img {
+		background-color: darkgrey;
+	}
+</style>
